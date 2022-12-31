@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Text, Box, Stack, Button, HStack, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon,} from "@chakra-ui/react";
+import { Text, Box, Stack, Button, HStack, Card, CardHeader, CardBody, CardFooter} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
@@ -46,10 +46,11 @@ const Inicio_vecino = () => {
     return (
         <Stack
             flexDirection = "column"
-            width = "full"
-            height = "140vh"
+            width="150wh"
+            height="auto"
+            minH={"100vh"}
             backgroundColor = "blue.400"
-            alignItems = "center"
+            alignItems={"center"}
         >
 
             <HStack>
@@ -58,241 +59,150 @@ const Inicio_vecino = () => {
                 </Text>
             </HStack>
 
-            <Box minW = {{ base: "10%",  md: "50"}} width = {600}>
+            <Box width = {"100%"} >
                 <Stack
                     spacing = {4}
                     p = "1rem"
                     backgroundColor = "whiteAlpha.900"
                     boxShadow = "md"
-                    rounded = "16"
                     flexDir = "column"
                     mb = "10"
                     justifyContent = "center"
                     alignItems = "center"
                 >
-
                     <HStack>
-                        <Text as='b' fontSize = {20} color = "blue.500">
+                        <Text as='b' fontSize = {30} color = "blue.500">
                             DATOS PERSONALES
                         </Text>
                     </HStack>
 
-                    <Stack direction={['column', 'row']}>
-                        <Text as='b'>Nombre:</Text>
-                        <Text>{showVecino()[0]+" "+showVecino()[1]}</Text>
+                    <Stack fontSize = {25} direction={['column', 'row']} spacing={20} >
+                        <Stack direction={['row']}>
+                            <Text color = "blue.500" as='b'>Nombre:</Text>
+                            <Text>{showVecino()[0]+" "+showVecino()[1]}</Text>
+                        </Stack>
+                        <Stack direction={['row']}>
+                            <Text color = "blue.500" as='b'>Vivienda:</Text>
+                            <Text>{showVecino()[2]}</Text>
+                        </Stack>
+                        <Stack direction={['row']}>
+                            <Text color = "blue.500" as='b'>Permiso:</Text>
+                            <Text as='b' color='green' textTransform={'uppercase'}>{showVecino()[3]}</Text>
+                        </Stack>
                     </Stack>
-
-                    <Stack direction={['column', 'row']}>
-                        <Text as='b'>Vivienda:</Text>
-                        <Text>{showVecino()[2]}</Text>
-                        <Text as='b'>Permiso:</Text>
-                        <Text as='b' color='green' textTransform={'uppercase'}>{showVecino()[3]}</Text>
-                    </Stack>
-
-                    <Button
-                            borderRadius = {0}
-                            type = "submit"
-                            variant = "solid"
-                            colorScheme = "blue"
-                            width = {150}
-                            height = {50}
-                            rounded = "50"
-                        >
-                        Editar
-                    </Button>
                 </Stack>
             </Box>
 
-            <Box
-                backgroundColor = "whiteAlpha.900"
-                boxShadow = "md"
-                rounded = "16"
-                minW = {{ base: "10%", width: "90"}}
-                width = {900}
-            >
-                <HStack
-                    minW = {{ base: "10%"}}
-                    width={900}
-                    spacing = {30}
-                    p = "2rem"
+                <Stack
                     direction={['column', 'row']}
+                    p={5}
+                    spacing={5}
+                    backgroundColor={"whiteAlpha.900"}
+                    width={"100%"}
                 >
-                    <Stack width = {700} height = {230} alignItems = 'center' boxShadow = "md" rounded = "16">
-                    <Accordion allowToggle >
-                            <AccordionItem>
-                                <h2 >
-                                    <AccordionButton width={260}>
-                                        <Box as="span" flex='1' >
-                                            <Text as='b' textTransform={'uppercase'} textAlign={'center'}>
-                                                Historial Reservas
-                                            </Text>
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                </h2>
-                                <Box>
-                                <AccordionPanel textAlign={'justify'}>
-                                    <Text height={90}>Despliegue detallado de reservas anteriormente realizadas.</Text>
-                                </AccordionPanel>
-                                </Box>
-                            </AccordionItem>
-                            </Accordion>
+                    <Stack width={"100%"} >
+                    <Card rounded = "16" textAlign={'center'} backgroundColor="whiteAlpha.900" height={"full"}>
+                        <CardHeader backgroundColor="blue.400" rounded = "16">
+                            <Text color = "whiteAlpha.900" textTransform={'uppercase'} as='b'>Historial Reservas</Text>
+                        </CardHeader>
+
+                        <CardBody>
+                            <Text textAlign={'justify'}>
+                            Despliegue detallado de reservas anteriormente realizadas.</Text>
+                        </CardBody>
+
+                        <CardFooter justifyContent={'center'}>
                             <Button
-                                borderRadius = {0}
-                                variant = "solid"
+                                variant = {"solid"}
                                 colorScheme = "blue"
-                                width = {160}
-                                height={50}
+                                width = {"80%"}
                                 rounded = "50"
-                                mt={60}
                                 onClick = {() => router1.push({pathname:'/Vecino/reservas_vecino', query:{codigo: vecino.codigo},})}
                             >
                                 Ingresar
                             </Button>
+                        </CardFooter>
+                    </Card>
                     </Stack>
 
-                    <Stack width={700} height={230} alignItems='center' boxShadow = "md" rounded = "16">
-                        <Accordion allowToggle >
-                            <AccordionItem>
-                                <h2 >
-                                    <AccordionButton width={260}>
-                                        <Box as="span" flex='1' >
-                                            <Text as='b' textTransform={'uppercase'} textAlign={'center'}>
-                                                Multas
-                                            </Text>
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                </h2>
-                                <Box>
-                                <AccordionPanel textAlign={'justify'}>
-                                    <Text height={90}>Despliegue detallado de multas obtenidas a través del tiempo.</Text>
-                                </AccordionPanel>
-                                </Box>
-                            </AccordionItem>
-                            </Accordion>
+                    <Stack width={"100%"} >
+                    <Card rounded = "16" textAlign={'center'} backgroundColor="whiteAlpha.900" height={"full"}>
+                    <CardHeader backgroundColor="blue.400" rounded = "16">
+                            <Text color = "whiteAlpha.900" textAlign={'center'} textTransform={'uppercase'} as='b' >Multas</Text>
+                        </CardHeader>
+
+                        <CardBody>
+                            <Text textAlign={'justify'}>
+                            Despliegue detallado de multas obtenidas a través del tiempo.
+                            </Text>
+                        </CardBody>
+
+                        <CardFooter justifyContent={'center'}>
                             <Button
-                                borderRadius = {0}
                                 variant = "solid"
                                 colorScheme = "blue"
-                                width = {160}
-                                height={50}
+                                width = {"80%"}
                                 rounded = "50"
-                                mt={60}
                                 onClick = {() => router1.push({pathname: '/Vecino/multas_vecino', query:{codigo: vecino.codigo},})}
                             >
                                 Ingresar
                             </Button>
+                        </CardFooter>
+                    </Card>
                     </Stack>
 
-                        <Stack width={700} height={230} alignItems='center' boxShadow = "md" rounded = "16">
-                            <Accordion allowToggle>
-                            <AccordionItem>
-                                <h2 >
-                                    <AccordionButton width={260}>
-                                        <Box as="span" flex='1'>
-                                            <Text as='b' textTransform={'uppercase'} textAlign={'center'}>
-                                                Disponibilidad
-                                            </Text>
-                                        </Box>
-                                    <AccordionIcon />
-                                    </AccordionButton>
-                                </h2>
-                                <Box>
-                                <AccordionPanel  textAlign={'justify'}>
-                                    <Text height={90}>Despliegue de calendario de disponibilidad de servicios para reservar.</Text>
-                                </AccordionPanel>
-                                </Box>
-                            </AccordionItem>
-                            </Accordion>
+                    <Stack width={"100%"}>
+                    <Card rounded = "16" textAlign={'center'} backgroundColor="whiteAlpha.900" height={"full"}>
+                    <CardHeader backgroundColor="blue.400" rounded = "16">
+                            <Text color = "whiteAlpha.900" textAlign={'center'} textTransform={'uppercase'} as='b' >Gastos</Text>
+                        </CardHeader>
+
+                        <CardBody>
+                            <Text textAlign={'justify'}>
+                            Despliegue detallado de gastos anteriormente realizados al reservar servicios
+                            </Text>
+                        </CardBody>
+
+                        <CardFooter justifyContent={'center'}>
                             <Button
-                                borderRadius = {0}
                                 variant = "solid"
                                 colorScheme = "blue"
-                                width = {160}
-                                height={50}
+                                width = {"80%"}
                                 rounded = "50"
-                                mt={60}
-                                onClick = {() => router1.push("/Vecino/disponibilidad_vecino")}
+                                onClick = {() => router1.push("/Vecino/gastos_vecino")}
                             >
                                 Ingresar
                             </Button>
-                        </Stack>
-                </HStack>
-
-                <HStack
-                    minW = {{ base: "10%"}}
-                    width={900}
-                    spacing = {30}
-                    p = "2rem"
-                    direction={['column', 'row']}
-                    alignItems={'center'}
-                >
-                    <Stack width={900} height={230} alignItems='center' boxShadow = "md" rounded = "16">
-                        <Accordion allowToggle>
-                            <AccordionItem>
-                                <h2 >
-                                    <AccordionButton width={405}>
-                                        <Box as="span" flex='1'>
-                                            <Text as='b' textTransform={'uppercase'} textAlign={'center'}>
-                                                Gastos
-                                            </Text>
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                </h2>
-                                <Box>
-                                <AccordionPanel textAlign={'justify'}>
-                                    <Text height={90}>Despliegue detallado de gastos anteriormente realizados al reservar servicios</Text>
-                                </AccordionPanel>
-                                </Box>
-                            </AccordionItem>
-                        </Accordion>
-                        <Button
-                                    borderRadius = {0}
-                                    variant = "solid"
-                                    colorScheme = "blue"
-                                    width = {160}
-                                    height={50}
-                                    rounded = "50"
-                                    onClick = {() => router1.push("/Vecino/gastos_vecino")}
-                                >
-                                    Ingresar
-                                </Button>
+                        </CardFooter>
+                    </Card>
                     </Stack>
 
-                    <Stack width={900} height={230} alignItems='center' boxShadow = "md" rounded = "16">
-                        <Accordion allowToggle>
-                            <AccordionItem>
-                                <h2 >
-                                    <AccordionButton width={405}>
-                                        <Box as="span" flex='1'>
-                                            <Text as='b' textTransform={'uppercase'} textAlign={'center'}>
-                                                Mensajes
-                                            </Text>
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                </h2>
-                                <AccordionPanel textAlign={'justify'}>
-                                    <Text height={90}>Despliegue de los mensajes enviados por administrador.</Text>
-                                </AccordionPanel>
-                            </AccordionItem>
-                        </Accordion>
-                        <Button
-                                    borderRadius = {0}
-                                    variant = "solid"
-                                    colorScheme = "blue"
-                                    width = {160}
-                                    height={50}
-                                    rounded = "50"
-                                    onClick = {() => router1.push("/Vecino/mensajes_vecino")}
-                                >
-                                    Ingresar
-                        </Button>
+                    <Stack width={"100%"}>
+                    <Card rounded = "16" textAlign={'center'} backgroundColor="whiteAlpha.900" height={"full"}>
+                    <CardHeader backgroundColor="blue.400" rounded = "16">
+                            <Text color = "whiteAlpha.900"textAlign={'center'} textTransform={'uppercase'} as='b' >Mensajes</Text>
+                        </CardHeader>
+
+                        <CardBody>
+                            <Text textAlign={'justify'}>
+                            Despliegue de los mensajes enviados por administrador.
+                            </Text>
+                        </CardBody>
+
+                        <CardFooter justifyContent={'center'}>
+                            <Button
+                                variant = "solid"
+                                colorScheme = "blue"
+                                width = {"80%"}
+                                rounded = "50"
+                                onClick = {() => router1.push("/Vecino/mensajes_vecino")}
+                            >
+                                Ingresar
+                            </Button>
+                        </CardFooter>
+                    </Card>
                     </Stack>
-                </HStack>
-            </Box>
+                </Stack>
         </Stack>
     );
 };

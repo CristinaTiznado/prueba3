@@ -48,7 +48,6 @@ const Inicio_admin = () => {
         );
     };
 
-
 const [visible, setVisible] = useState(false);
 
 const onSubmit = async(e) => {
@@ -99,8 +98,9 @@ const Carga = (e) =>{
     return (
         <Stack
             flexDirection = "column"
-            width = "100wh"
-            height = "130vh"
+            width="150wh"
+            height="auto"
+            minH={"100vh"}
             backgroundColor = "blue.300"
             alignItems = "center"
         >
@@ -122,47 +122,46 @@ const Carga = (e) =>{
 
             <HStack>
                 <Text fontSize = {50} color = "white" as={"b"} mt = {30} mb = {30}>
-                    Inicio
+                    INICIO
                 </Text>
             </HStack>
 
-            <Box minW = {{ base: "10%", md: "50" }} width={600}>
+            <Box minW = {{ base: "10%", md: "50" }} width={"100%"}>
                 <Stack
                     spacing = {4}
                     p = "1rem"
                     backgroundColor = "whiteAlpha.900"
                     boxShadow = "md"
-                    rounded = "16"
                     flexDir = "column"
                     mb = "10"
                     justifyContent = "center"
                     alignItems = "center"
                 >
-
                     <HStack >
-                        <Text as='b' fontSize = {20} color = "blue.500" >
+                        <Text as='b' fontSize = {30} color = "blue.500" >
                             Datos personales
                         </Text>
                     </HStack>
 
-                    <HStack>
-                        <Text as='b'>Nombre:</Text>
-                        <Text>{showAdmin()[0]+" "+showAdmin()[1]}</Text>
-                    </HStack>
-
-                    <HStack>
-                        <Text as='b'>Telefono:</Text>
-                        <Text id="numero" style={{display: visible ? 'none' : 'inline'}}>{showAdmin()[2]}</Text>
-                        <Text id="n" style={{display: visible ? 'inline' : 'none'}}> +569</Text>
-                        <Input type="number" id="nu" onChange={Carga} style={{display: visible ? 'inline' : 'none'}}></Input>
-                    </HStack>
+                    <Stack fontSize = {25} direction={['column', 'row']} spacing={20}>
+                        <Stack direction={['row']}>
+                            <Text color = "blue.500" as='b'>Nombre:</Text>
+                            <Text>{showAdmin()[0]+" "+showAdmin()[1]}</Text>
+                        </Stack>
+                        <Stack direction={['row']}>
+                            <Text color = "blue.500" as='b'>Telefono:</Text>
+                            <Text id="numero" style={{display: visible ? 'none' : 'inline'}}>{showAdmin()[2]}</Text>
+                            <Text id="n" style={{display: visible ? 'inline' : 'none'}}>+569</Text>
+                            <Input boxShadow={"outline"}  type="number" id="nu" onChange={Carga} style={{display: visible ? 'inline' : 'none'}}></Input>
+                        </Stack>
+                    </Stack>
 
                     <Button
-                            borderRadius = {20}
                             type = "submit"
                             variant = "solid"
                             colorScheme = "blue"
-                            width = "30%"
+                            width = {150}
+                            height = {50}
                             rounded = "50"
                             rightIcon={<EditIcon /> }
                             id="editar"
@@ -171,13 +170,15 @@ const Carga = (e) =>{
                         >
                         Editar
                     </Button>
+
                     <HStack>
                     <Button
                             borderRadius = {20}
                             type = "submit"
                             variant = "solid"
                             colorScheme = "blue"
-                            width = "full"
+                            width = {150}
+                            height = {50}
                             rounded = "50"
                             rightIcon={<EditIcon /> }
                             id="guardar"
@@ -191,7 +192,8 @@ const Carga = (e) =>{
                             borderRadius={20}
                             variant="solid"
                             colorScheme="blue"
-                            width="full"
+                            width = {150}
+                            height = {50}
                             rounded="50"
                             id="cancelar"
                             onClick={() => setVisible(false)}
@@ -204,24 +206,17 @@ const Carga = (e) =>{
                 </Stack>
             </Box>
 
-            <Box
-                backgroundColor = "whiteAlpha.900"
-                boxShadow = "md"
-                rounded = "16"
-                minW = {{ base: "10%", width: "90"}}
-                width = {800}
+            <Stack
+                direction={['column', 'row']}
+                p={5}
+                spacing={5}
+                backgroundColor={"whiteAlpha.900"}
+                width={"100%"}
             >
-
-                <Stack
-                    minW = {{ base: "10%"}}
-                    width={800}
-                    spacing = {50}
-                    p = "2rem"
-                    direction={['column', 'row']}
-                >
-                    <Card textAlign={'center'} width={600} height={300}>
-                    <CardHeader>
-                            <Text textTransform={'uppercase'} as='b'>Reservas</Text>
+                <Stack width={"100%"}>
+                <Card rounded = "16" textAlign={'center'} backgroundColor="whiteAlpha.900" height={"full"}>
+                    <CardHeader backgroundColor="blue.400" rounded = "16">
+                            <Text color = "whiteAlpha.900" textTransform={'uppercase'} as='b'>Reservas</Text>
                         </CardHeader>
 
                         <CardBody>
@@ -232,11 +227,9 @@ const Carga = (e) =>{
 
                         <CardFooter justifyContent={'center'}>
                             <Button
-                                borderRadius = {0}
-                                variant = "solid"
+                                variant = {"solid"}
                                 colorScheme = "blue"
-                                width = {160}
-                                height={50}
+                                width = {"80%"}
                                 rounded = "50"
                                 onClick = {() => router1.push("/Admin/Reservas/reservas_admin")}
                             >
@@ -244,10 +237,12 @@ const Carga = (e) =>{
                             </Button>
                         </CardFooter>
                     </Card>
-
-                    <Card textAlign={'center'} width={600} height={300}>
-                    <CardHeader>
-                            <Text textAlign={'center'} textTransform={'uppercase'} as='b' >Gastos</Text>
+                </Stack>
+                    
+                <Stack width={"100%"}>
+                <Card rounded = "16" textAlign={'center'} backgroundColor="whiteAlpha.900" height={"full"}>
+                    <CardHeader backgroundColor="blue.400" rounded = "16">
+                            <Text color = "whiteAlpha.900" textAlign={'center'} textTransform={'uppercase'} as='b' >Gastos</Text>
                         </CardHeader>
 
                         <CardBody>
@@ -258,11 +253,9 @@ const Carga = (e) =>{
 
                         <CardFooter justifyContent={'center'}>
                             <Button
-                                borderRadius = {0}
-                                variant = "solid"
+                                variant = {"solid"}
                                 colorScheme = "blue"
-                                width = {160}
-                                height={50}
+                                width = {"80%"}
                                 rounded = "50"
                                 onClick = {() => router1.push("/Admin/Gastos/gastos_admin")}
                             >
@@ -270,10 +263,12 @@ const Carga = (e) =>{
                             </Button>
                         </CardFooter>
                     </Card>
-
-                    <Card textAlign={'center'} width={600} height={300}>
-                    <CardHeader>
-                            <Text textAlign={'center'} textTransform={'uppercase'} as='b' >Mensajes</Text>
+                </Stack>
+                    
+                <Stack width={"100%"}>
+                <Card rounded = "16" textAlign={'center'} backgroundColor="whiteAlpha.900" height={"full"}>
+                    <CardHeader backgroundColor="blue.400" rounded = "16">
+                            <Text color = "whiteAlpha.900" textAlign={'center'} textTransform={'uppercase'} as='b' >Mensajes</Text>
                         </CardHeader>
 
                         <CardBody>
@@ -284,11 +279,9 @@ const Carga = (e) =>{
 
                         <CardFooter justifyContent={'center'}>
                             <Button
-                                borderRadius = {0}
-                                variant = "solid"
+                                variant = {"solid"}
                                 colorScheme = "blue"
-                                width = {160}
-                                height={50}
+                                width = {"80%"}
                                 rounded = "50"
                                 onClick = {() => router1.push("/Admin/Mensajes/mensajes_admin")}
                             >
@@ -297,17 +290,11 @@ const Carga = (e) =>{
                         </CardFooter>
                     </Card>
                 </Stack>
-
-                <Stack
-                    minW = {{ base: "10%"}}
-                    width={800}
-                    spacing = {50}
-                    p = "2rem"
-                    direction={['column', 'row']}
-                >
-                    <Card textAlign={'center'} width={600} height={300}>
-                    <CardHeader>
-                            <Text textAlign={'center'} textTransform={'uppercase'} as='b' >Multas</Text>
+                    
+                    <Stack width={"100%"}>
+                    <Card rounded = "16" textAlign={'center'} backgroundColor="whiteAlpha.900" height={"full"}>
+                    <CardHeader backgroundColor="blue.400" rounded = "16">
+                            <Text color = "whiteAlpha.900" textAlign={'center'} textTransform={'uppercase'} as='b' >Multas</Text>
                         </CardHeader>
 
                         <CardBody>
@@ -318,11 +305,9 @@ const Carga = (e) =>{
 
                         <CardFooter justifyContent={'center'}>
                             <Button
-                                borderRadius = {0}
-                                variant = "solid"
+                                variant = {"solid"}
                                 colorScheme = "blue"
-                                width = {160}
-                                height={50}
+                                width = {"80%"}
                                 rounded = "50"
                                 onClick = {() => router1.push("/Admin/Multas/multas_admin")}
                             >
@@ -330,10 +315,12 @@ const Carga = (e) =>{
                             </Button>
                         </CardFooter>
                     </Card>
-
-                    <Card textAlign={'center'} width={600} height={300}>
-                    <CardHeader>
-                            <Text textAlign={'center'} textTransform={'uppercase'} as='b' >Mantenciones</Text>
+                    </Stack>
+                    
+                    <Stack width={"100%"}>
+                    <Card rounded = "16" textAlign={'center'} backgroundColor="whiteAlpha.900" height={"full"}>
+                    <CardHeader backgroundColor="blue.400" rounded = "16">
+                            <Text color = "whiteAlpha.900"  textAlign={'center'} textTransform={'uppercase'} as='b' >Mantenciones</Text>
                         </CardHeader>
 
                         <CardBody>
@@ -344,11 +331,9 @@ const Carga = (e) =>{
 
                         <CardFooter justifyContent={'center'}>
                             <Button
-                                borderRadius = {0}
-                                variant = "solid"
+                                variant = {"solid"}
                                 colorScheme = "blue"
-                                width = {160}
-                                height={50}
+                                width = {"80%"}
                                 rounded = "50"
                                 onClick = {() => router1.push("/Admin/Mantenciones/mantenciones_admin")}
                             >
@@ -356,10 +341,12 @@ const Carga = (e) =>{
                             </Button>
                         </CardFooter>
                     </Card>
-
-                    <Card textAlign={'center'} width={600} height={300}>
-                    <CardHeader>
-                            <Text textAlign={'center'} textTransform={'uppercase'} as='b' >Vecinos</Text>
+                    </Stack>
+                    
+                    <Stack width={"100%"}>
+                    <Card rounded = "16" textAlign={'center'} backgroundColor="whiteAlpha.900" height={"full"}>
+                    <CardHeader backgroundColor="blue.400" rounded = "16">
+                            <Text color = "whiteAlpha.900" textAlign={'center'} textTransform={'uppercase'} as='b' >Vecinos</Text>
                         </CardHeader>
 
                         <CardBody>
@@ -370,11 +357,9 @@ const Carga = (e) =>{
 
                         <CardFooter justifyContent={'center'}>
                             <Button
-                                borderRadius = {0}
-                                variant = "solid"
+                                variant = {"solid"}
                                 colorScheme = "blue"
-                                width = {160}
-                                height={50}
+                                width = {"80%"}
                                 rounded = "50"
                                 onClick = {() => router1.push("/Admin/Vecino/vecinos_admin")}
                             >
@@ -382,8 +367,8 @@ const Carga = (e) =>{
                             </Button>
                         </CardFooter>
                     </Card>
-                </Stack>
-            </Box>
+                    </Stack>
+            </Stack>
         </Stack>
     );
 };

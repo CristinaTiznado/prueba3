@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Flex, Text, Box, Stack, Table, Thead,Tr,Td,Tbody, Button,HStack, Input, Menu, MenuButton, MenuList,MenuItem} from "@chakra-ui/react";
+import { Flex, Text, Box, Stack, Table, Thead,Tr,Td,Tbody, Button,HStack, Input, Menu, MenuButton, MenuList,MenuItem, TableContainer} from "@chakra-ui/react";
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router'
 
 const VecinosAdmin= () => {
@@ -91,6 +92,7 @@ const VecinosAdmin= () => {
                         colorScheme="blue"
                         rounded="50"
                         width={"full"}
+                        rightIcon={<EditIcon /> }
                         onClick={()=> router.push({pathname:'/Admin/Vecino/editar_vecino',
                     query:{codigo:vecinos.codigo}})}
                         >Editar</Button>}</Td>
@@ -100,6 +102,7 @@ const VecinosAdmin= () => {
                         colorScheme="blue"
                         rounded="50"
                         width={"80%"}
+                        rightIcon={<DeleteIcon /> }
                         onClick={()=>deleteVecino(vecinos.codigo)}
                         >Eliminar</Button>}</Td>
                 </Tr>
@@ -140,45 +143,31 @@ return (
             Volver atrás</Button>
 
         <Text fontSize={50} color="white" as={"b"} mt={30} mb={30}>Vecinos</Text>
-        <Button mb="2"
+        <Button 
                 variant="solid"
                 colorScheme="blue"
                 rounded="50"
                 onClick = {() => router.push("agregar_vecino")}>
                     Agregar Vecino</Button>
-        <HStack>
-
-            <Box  minW={{ base: "10%", md: "468px"}} width="100wh" >
-            <form>
-                <Stack spacing={4}
-                    p="1rem"
-                    backgroundColor="whiteAlpha.900"
-                    boxShadow="md"
-                    rounded="16"
-                    flexDir="column"
-            mb="2"
-            justifyContent="center"
-            alignItems="center">
-                    <Table variant={"simple"}>
+                <TableContainer mt={30} rounded="16" width={"90%"}>
+                    <Table variant={"simple"} colorScheme="blue" backgroundColor="whiteAlpha.900">
                         <Thead>
                         <Tr>
-                            <Td color={"blue.400"}>Nombre</Td>
-                            <Td color={"blue.400"}>Apellido</Td>
-                            <Td color={"blue.400"}>Rut</Td>
-                            <Td color={"blue.400"}>Vivienda</Td>
-                            <Td color={"blue.400"}>Horas</Td>
-                            <Td color={"blue.400"}>Permiso</Td>
-                            <Td color={"blue.400"}>Opciones</Td>
+                            <Td bgColor={"blue.500"} color={"white"}>Nombre</Td>
+                            <Td bgColor={"blue.500"} color={"white"}>Apellido</Td>
+                            <Td bgColor={"blue.500"} color={"white"}>Rut</Td>
+                            <Td bgColor={"blue.500"} color={"white"}>Vivienda</Td>
+                            <Td bgColor={"blue.500"} color={"white"}>Horas</Td>
+                            <Td bgColor={"blue.500"} color={"white"}>Permiso</Td>
+                            <Td bgColor={"blue.500"} color={"white"}>Opciones</Td>
+                            <Td bgColor={"blue.500"} color={"white"}></Td>
                         </Tr>
                         </Thead>
                         <Tbody>
                         {showVecinos()}
                     </Tbody>
                     </Table>
-                </Stack>
-            </form>
-        </Box>
-        </HStack>
+                    </TableContainer>
         </Flex>
     );
 };

@@ -143,8 +143,9 @@ const ReservasVecino = () => {
     return(
         <Flex
             flexDirection = "column"
-            width = "100wh"
-            height = "100vh"
+            width="150wh"
+            height="auto"
+            minH={"100vh"}
             backgroundColor = "blue.400"
             alignItems = "center"
         >

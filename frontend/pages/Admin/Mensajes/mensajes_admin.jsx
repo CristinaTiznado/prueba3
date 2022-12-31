@@ -53,8 +53,9 @@ const showMensajes = () =>{
     return (
         <Flex
             flexDirection="column"
-            width="100wh"
-            height="100vh"
+            width="150wh"
+            height="auto"
+            minH={"100vh"}
             backgroundColor="blue.300"
             alignItems="center"
             >
@@ -64,7 +65,7 @@ const showMensajes = () =>{
     Menú
   </MenuButton>
   <MenuList >
-    <MenuItem color="blue.400" as="b"  onClick={() => router.push("/Admin/inicio_admin")} >Inicio</MenuItem>
+    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/inicio_admin")} >Inicio</MenuItem>
     <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Reservas/reservas_admin")}>Reservas</MenuItem>
     <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Gastos/gastos_admin")}>Gastos</MenuItem>
     <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Multas/multas_admin")}>Multas</MenuItem>
@@ -84,31 +85,19 @@ const showMensajes = () =>{
 
 
         <Text fontSize={50} color="white" as={"b"} mt={30} mb={30}>Mensajes</Text>
-        <Button mb="2"
+        <Button 
                 variant="solid"
                 colorScheme="blue"
                 rounded="50"
                 onClick = {() => router.push("/Admin/Mensajes/agregar_mensaje")}>
                     Agregar Mensaje</Button>
-        <HStack>
+        <Stack mt={30} width={"90%"} alignItems="center" rounded="16" backgroundColor="whiteAlpha.900" direction={['column']}>
 
-            <Box  minW={{ base: "10%", md: "468px"}} width="700">
-                <Stack spacing={4}
-                    p="1rem"
-                    backgroundColor="whiteAlpha.900"
-                    boxShadow="md"
-                    rounded="16"
-                    flexDir="column"
-            mb="2"
-            justifyContent="center"
-            alignItems="center">
-                    <Accordion allowToggle key={mensajes._id}width={700}>
+                    <Accordion allowToggle key={mensajes._id} width={"100%"} mt={5} mb={5}>
                     {showMensajes()}
                     </Accordion>
 
-                </Stack>
-        </Box>
-        </HStack>
+        </Stack>
         </Flex>
     );
 };

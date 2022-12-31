@@ -1,13 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { Flex, Text, Box, Stack,Button,VStack,HStack, Input, Select} from "@chakra-ui/react";
-import format from 'date-fns/format'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import { useRouter } from "next/router";
-
-
-import 'react-date-range/dist/styles.css'
-import 'react-date-range/dist/theme/default.css'
 
 const AgregarReserva=()=> {
 
@@ -61,7 +56,6 @@ const AgregarReserva=()=> {
 
     useEffect(() => {
         getServicios()
-        setCalendar(format(new Date(), 'dd/MM/yyyy'))
         document.addEventListener("keydown", hideOnEscape, true)
         document.addEventListener("click", hideOnClickOutside, true)
     }, [])

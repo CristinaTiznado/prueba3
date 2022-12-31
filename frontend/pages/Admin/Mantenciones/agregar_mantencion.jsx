@@ -54,7 +54,6 @@ const [vecinos, setVecinos] = useState([])
         dia:'',
         mes:'',
         year:'',
-        hora:'',
         observaciones:''
       })
 

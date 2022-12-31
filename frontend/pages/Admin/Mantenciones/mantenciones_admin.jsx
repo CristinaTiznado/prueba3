@@ -42,7 +42,7 @@ const showMantenciones = () =>{
     return (
         <AccordionItem key={mantenciones._id}>
                 <h2>
-                <AccordionButton>
+                <AccordionButton >
                 <Box as="span" flex='1' textAlign='left' width={700}>
                     <Text><b>Fecha:</b> {mantenciones.dia}/{mantenciones.mes}/{mantenciones.year}</Text>
                     <Text><b>Empresa:</b> {mantenciones.nombre_empresa} &nbsp;&nbsp; <b>N° de Mantención:</b> {mantenciones.num_mantencion}  </Text>
@@ -112,25 +112,12 @@ return (
                 onClick = {() => router.push("/Admin/Mantenciones/agregar_mantencion")}>
                     Agregar Mantencion</Button>
 
-    <HStack>
+    <Stack mt={30} width={"90%"} alignItems="center" rounded="16" backgroundColor="whiteAlpha.900" direction={['column']}>
 
-        <Box  minW={{ base: "10%", md: "468px"}} width="700">
-            <Stack spacing={4}
-                p="1rem"
-                backgroundColor="whiteAlpha.900"
-                boxShadow="md"
-                rounded="16"
-                flexDir="column"
-        mb="2"
-        justifyContent="center"
-        alignItems="center">
-                <Accordion allowToggle width={700}>
+                <Accordion allowToggle width={"100%"} mt={5} mb={5}>
                 {showMantenciones()}
                 </Accordion>
-
-            </Stack>
-    </Box>
-    </HStack>
+    </Stack>
     </Flex>
 );
 

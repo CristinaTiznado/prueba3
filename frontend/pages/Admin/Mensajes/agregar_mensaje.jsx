@@ -64,7 +64,6 @@ const showVecinos= () =>{
         if(vecinos.estado=='activo')
          return (
         <Checkbox onChange={onChange} name="vecino" key={vecinos.codigo} value={vecinos._id}>{vecinos.nombre} {vecinos.apellido}</Checkbox>
-
 )
 })
 }
@@ -125,6 +124,7 @@ const onSubmit= async(e) =>{
               })
         }
     } catch (error) {
+        console.log(error)
       Swal.fire({
         title:"No se pudo enviar el mensaje",
         text:'Por favor revise los datos ingresado',
@@ -133,10 +133,6 @@ const onSubmit= async(e) =>{
       })
     }
   }
-
-
-
-
 
 return (
     <Flex
@@ -236,7 +232,6 @@ return (
                 </Stack>
             </form>
         </Box>
-
             </Flex>
 )
 }
