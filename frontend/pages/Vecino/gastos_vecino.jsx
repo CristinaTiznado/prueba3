@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Flex, Text, Box, Stack, Table, Thead,Tr,Td,Tbody, Button,VStack,HStack} from "@chakra-ui/react";
+import { useDisclosure,DrawerOverlay,DrawerContent,DrawerHeader,DrawerBody,DrawerFooter,Drawer,Flex, Text, Box, Stack, Table, Thead,Tr,Td,Tbody, Button,VStack,HStack, TableContainer} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
 const GastosVecino= () => {
-
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const router = useRouter();
     const {
         query: { codigo },
@@ -93,41 +93,60 @@ return (
         backgroundColor="blue.400"
         alignItems="center"
         >
+<Box backgroundColor="blue.500" w={"100%"} h="16">
+        <Button colorScheme='blue' onClick={onOpen} h="16">
+        Menu
+       </Button>
+       <Button colorScheme='blue' marginLeft="80%" onClick={()=>router.push("/")} h="16">
+        Cerrar Sesión
+       </Button>
+       </Box>
 
+        <Button mt={10} name="atras" colorScheme="blue" as="b" rounded="40" marginLeft="-60%"
+        onClick={()=>router.push("/Vecino/inicio_vecino")}>
+        Volver atrás</Button>
+
+        <Drawer placement='left'  onClose={onClose} isOpen={isOpen} >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader  backgroundColor="blue.500" color="white">Menu</DrawerHeader>
+          <DrawerBody backgroundColor="blue.300">
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Inicio</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Reservas</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Gastos</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Mensajes</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Multas</Button>
+
+          </DrawerBody>
+          <DrawerFooter backgroundColor="blue.300">
+            <Button mr = {3} onClick={onClose} colorScheme="blue">
+              Cerrar
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
 
 
     <Text fontSize={50} color="white" mt={30} mb={30}>Cobros de Vecinos</Text>
-    <HStack>
-        <Box  minW={{ base: "10%", md: "468px"}} >
-        <form>
-            <Stack spacing={4}
-                p="1rem"
-                backgroundColor="whiteAlpha.900"
-                boxShadow="md"
-                rounded="16"
-                flexDir="column"
-        mb="2"
-        justifyContent="center"
-        alignItems="center">
-                <Table variant={"simple"}>
+    <TableContainer rounded="16" width={"90%"}>
+
+    
+                <Table variant={"simple"} colorScheme="blue" backgroundColor="whiteAlpha.900">
                     <Thead>
                     <Tr>
-						<Td color={"blue.400"}>Mes</Td>
-						<Td color={"blue.400"}>Año</Td>
-						<Td color={"blue.400"}>Servicios</Td>
-						<Td color={"blue.400"}>Multas</Td>
-						<Td color={"blue.400"}>Total</Td>
-						<Td color={"blue.400"}>N° de Boleta</Td>
+						<Td bgColor={"blue.500"} color={"white"}>Mes</Td>
+						<Td bgColor={"blue.500"} color={"white"}>Año</Td>
+						<Td bgColor={"blue.500"} color={"white"}>Servicios</Td>
+						<Td bgColor={"blue.500"} color={"white"}>Multas</Td>
+						<Td bgColor={"blue.500"} color={"white"}>Total</Td>
+						<Td bgColor={"blue.500"} color={"white"}>N° de Boleta</Td>
 					</Tr>
                     </Thead>
                     <Tbody>
                     {showCobros()}
 				</Tbody>
                 </Table>
-            </Stack>
-        </form>
-    </Box>
-    </HStack>
+                </TableContainer>
     </Flex>
 );
 };

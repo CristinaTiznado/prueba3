@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Flex, Text, Box, Stack , HStack, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel} from "@chakra-ui/react";
+import { useDisclosure,DrawerOverlay,DrawerContent,DrawerHeader,DrawerBody,DrawerFooter,Drawer,Flex, Text, Box, Stack , Button, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel} from "@chakra-ui/react";
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useRouter } from "next/router";
 
 const MensajesVecino = () => {
-
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const router = useRouter();
     const {
         query: { codigo },
@@ -109,28 +109,50 @@ const showMensajes = () =>{
             alignItems="center"
             >
 
+<Box backgroundColor="blue.500" w={"100%"} h="16">
+        <Button colorScheme='blue' onClick={onOpen} h="16">
+        Menu
+       </Button>
+       <Button colorScheme='blue' marginLeft="80%" onClick={()=>router.push("/")} h="16">
+        Cerrar Sesión
+       </Button>
+       </Box>
 
+        <Button mt={10} name="atras" colorScheme="blue" as="b" rounded="40" marginLeft="-60%"
+        onClick={()=>router.push("/Vecino/inicio_vecino")}>
+        Volver atrás</Button>
+
+        <Drawer placement='left'  onClose={onClose} isOpen={isOpen} >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader  backgroundColor="blue.500" color="white">Menu</DrawerHeader>
+          <DrawerBody backgroundColor="blue.300">
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Inicio</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Reservas</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Gastos</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Mensajes</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Multas</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Manteciones</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Vecinos</Button>
+
+
+          </DrawerBody>
+          <DrawerFooter backgroundColor="blue.300">
+            <Button mr = {3} onClick={onClose} colorScheme="blue">
+              Cerrar
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
 
         <Text fontSize={50} color="white" mt={30} mb={30}>Mensajes</Text>
-        <HStack>
+        <Stack mt={30} width={"90%"} alignItems="center" rounded="16" backgroundColor="whiteAlpha.900" direction={['column']}>
 
-            <Box  minW={{ base: "10%", md: "468px"}} width="700">
-                <Stack spacing={4}
-                    p="1rem"
-                    backgroundColor="whiteAlpha.900"
-                    boxShadow="md"
-                    rounded="16"
-                    flexDir="column"
-            mb="2"
-            justifyContent="center"
-            alignItems="center">
-                    <Accordion allowToggle key={mensajes._id}width={700}>
+                    <Accordion allowToggle key={mensajes._id} width={"100%"} mt={5} mb={5}>
                     {showMensajes()}
                     </Accordion>
 
-                </Stack>
-        </Box>
-        </HStack>
+        </Stack>
         </Flex>
     );
 };

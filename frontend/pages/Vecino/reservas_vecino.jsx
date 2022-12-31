@@ -1,10 +1,11 @@
 import { useState, useEffect , React} from "react";
-import { Flex, Text, Box, Stack, Table, Thead,Tr,Td,Tbody, Button,VStack,HStack, Input} from "@chakra-ui/react";
+import { useDisclosure,DrawerOverlay,DrawerContent,DrawerHeader,DrawerBody,DrawerFooter,Drawer,Flex,TableContainer, Text, Box, Stack, Table, Thead,Tr,Td,Tbody, Button,VStack,HStack, Input} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
 const ReservasVecino = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const router = useRouter();
     const {
         query: { codigo },
@@ -108,9 +109,7 @@ const ReservasVecino = () => {
         return reservas.map(reservas => {
             return (
                 <Tr key = {reservas._id}>
-                    <Td>{reservas.dia}</Td>
-                    <Td>{reservas.mes}</Td>
-                    <Td>{reservas.year}</Td>
+                    <Td>{reservas.dia+"/"+reservas.mes+"/"+reservas.year}</Td>
                     <Td>{reservas.hora}</Td>
                     <Td>{reservas.servicio.nombre}</Td>
                     <Td>{"$"+reservas.servicio.costo}</Td>
@@ -142,131 +141,74 @@ const ReservasVecino = () => {
 
     return(
         <Flex
-            flexDirection = "column"
-            width="150wh"
-            height="auto"
-            minH={"100vh"}
-            backgroundColor = "blue.400"
-            alignItems = "center"
+        flexDirection="column"
+        width="150wh"
+        height="auto"
+        minH={"100vh"}
+        backgroundColor="blue.300"
+        alignItems="center"
         >
-            <Text
-                fontSize = {50}
-                color = "white"
-                mt = {30}
-                mb = {30}
-            >
-                Reservas de Servicio
-            </Text>
+        <Box backgroundColor="blue.500" w={"100%"} h="16">
+        <Button colorScheme='blue' onClick={onOpen} h="16">
+        Menu
+       </Button>
+       <Button colorScheme='blue' marginLeft="80%" onClick={()=>router.push("/")} h="16">
+        Cerrar Sesión
+       </Button>
+       </Box>
 
-            <Stack mb = {30}>
-                <Box minW = {{ base: "10%", md: "468px"}}>
-                    <form>
-                        <Stack spacing = {4}
-                            p = "1rem"
-                            backgroundColor = "whiteAlpha.900"
-                            boxShadow = "md"
-                            rounded = "16"
-                            flexDir = "column"
-                            mb = "2"
-                            justifyContent = "center"
-                            alignItems = "center"
-                        >
-                            <Text
-                                fontSize = {30}
-                                color = "blue.400"
-                                mt = {30}
-                                mb = {30}
-                            >
-                                Buscar Reserva
-                            </Text>
+        <Button mt={10} name="atras" colorScheme="blue" as="b" rounded="40" marginLeft="-60%"
+        onClick={()=>router.push("/Vecino/inicio_vecino")}>
+        Volver atrás</Button>
 
-                            <HStack>
-                                <VStack>
-                                    <Text>Dia</Text>
-                                        <Input placeholder="Ejemplo: 20"></Input>
-                                </VStack>
+        <Drawer placement='left'  onClose={onClose} isOpen={isOpen} >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader  backgroundColor="blue.500" color="white">Menu</DrawerHeader>
+          <DrawerBody backgroundColor="blue.300">
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Inicio</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Reservas</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Gastos</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Mensajes</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Multas</Button>
 
-                                <VStack>
-                                    <Text>Mes</Text>
-                                    <Input placeholder="Ejemplo: 02"></Input>
-                                </VStack>
+          </DrawerBody>
+          <DrawerFooter backgroundColor="blue.300">
+            <Button mr = {3} onClick={onClose} colorScheme="blue">
+              Cerrar
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
 
-                                <VStack>
-                                    <Text>Año</Text>
-                                    <Input placeholder="Ejemplo: 2022"></Input>
-                                </VStack>
-                            </HStack>
-
-                            <Button
-                                variant = "solid"
-                                colorScheme = "blue"
-                                width = "30%"
-                                rounded = "40"
-                                mt = {10}
-                            >
-                                Buscar
-                            </Button>
-                        </Stack>
-                    </form>
-                </Box>
-            </Stack>
-
-            <HStack>
-                <Box  minW = {{ base: "10%", md: "468px"}} >
-                    <form>
-                        <Stack
-                            spacing = {4}
-                            p = "1rem"
-                            backgroundColor = "whiteAlpha.900"
-                            boxShadow = "md"
-                            rounded = "16"
-                            flexDir = "column"
-                            mb = "2"
-                            justifyContent = "center"
-                            alignItems = "center"
-                        >
-                            <Text
-                                fontSize = {30}
-                                color = "blue.400"
-                                mt = {30}
-                                mb = {30}
-                            >
-                                Reservas
-                            </Text>
-
-                            <Button
-                                mb = "2"
-                                variant = "solid"
-                                colorScheme = "blue"
-                                rounded = "50"
-                                onClick = {() => router.push({pathname:'/Vecino/agregar_reserva', query:{codigo: codigo},})}
-                            >
-                                Agregar Reserva
-                            </Button>
-
-                            <Table variant = {"striped"} colorScheme = {"facebook"}>
-                                <Thead color = {'ActiveBorder'}>
-                                    <Tr>
-                                        <Td color = {"blue.400"}>Dia</Td>
-                                        <Td color = {"blue.400"}>Mes</Td>
-                                        <Td color = {"blue.400"}>Año</Td>
-                                        <Td color = {"blue.400"}>Hora</Td>
-                                        <Td color = {"blue.400"}>Servicio</Td>
-                                        <Td color = {"blue.400"}>Costo</Td>
-                                        <Td color = {"blue.400"}>N° de reserva</Td>
-                                        <Td color = {"blue.400"}>Acciones</Td>
-                                    </Tr>
-                                </Thead>
-
-                                <Tbody>
-                                    {showreservas()}
-                                </Tbody>
-                            </Table>
-                        </Stack>
-                    </form>
-                </Box>
-            </HStack>
-        </Flex>
+      <Text fontSize={50} color="white" mt={30} mb={30} fontFamily="inherit" >Reservas de Servicio</Text>
+      <Button
+            variant = "solid"
+            colorScheme = "blue"
+            width = "30%"
+            rounded = "40"
+            mb={10}
+            onClick = {() => router.push("/Vecino/agregar_reserva")}
+        >Agregar Reserva
+      </Button>
+                <TableContainer rounded="16" width={"90%"}>
+                <Table variant={"simple"} colorScheme="blue" backgroundColor="whiteAlpha.900">
+                    <Thead>
+                    <Tr >
+						<Td bgColor={"blue.500"} color={"white"}>Fecha</Td>
+						<Td bgColor={"blue.500"} color={"white"}>Hora</Td>
+						<Td bgColor={"blue.500"} color={"white"}>Servicio</Td>
+                        <Td bgColor={"blue.500"} color={"white"}>Vecino</Td>
+						<Td bgColor={"blue.500"} color={"white"}>N° de reserva</Td>
+						<Td bgColor={"blue.500"} color={"white"}>Acciones</Td>
+					</Tr>
+                    </Thead>
+                    <Tbody>
+                    {showreservas()}
+				</Tbody>
+                </Table>
+                </TableContainer>
+</Flex>
     );
 };
 

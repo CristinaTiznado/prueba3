@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Flex, Text, Box, Stack, Table, Thead,Tr,Td,Tbody, HStack} from "@chakra-ui/react";
+import { useDisclosure,DrawerOverlay,DrawerContent,DrawerHeader,DrawerBody,DrawerFooter,Drawer,Flex, Text, Box, Stack, Table, Thead,Tr,Td,Tbody, HStack, Button, TableContainer} from "@chakra-ui/react";
 import axios from 'axios'
 import { useRouter } from "next/router";
 import Swal from 'sweetalert2'
 
 const MultasVecino = () => {
-
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const [multas, setMultas] = useState([])
     const router = useRouter();
     const {
@@ -73,9 +73,7 @@ const MultasVecino = () => {
         return multas.map(multas =>{
             return (
                 <Tr key = {multas._id}>
-                <Td>{multas.dia}</Td>
-                <Td>{multas.mes}</Td>
-                <Td>{multas.year}</Td>
+                <Td>{multas.dia+"/"+multas.mes+"/"+multas.year}</Td>
                 <Td>{multas.tipo}</Td>
                 <Td>{"$"+multas.valor}</Td>
                 <Td>{multas.cod_multa}</Td>
@@ -92,32 +90,49 @@ const MultasVecino = () => {
             backgroundColor="blue.400"
             alignItems="center"
             >
+<Box backgroundColor="blue.500" w={"100%"} h="16">
+        <Button colorScheme='blue' onClick={onOpen} h="16">
+        Menu
+       </Button>
+       <Button colorScheme='blue' marginLeft="80%" onClick={()=>router.push("/")} h="16">
+        Cerrar Sesión
+       </Button>
+       </Box>
 
+        <Button mt={10} name="atras" colorScheme="blue" as="b" rounded="40" marginLeft="-60%"
+        onClick={()=>router.push("/Vecino/inicio_vecino")}>
+        Volver atrás</Button>
 
+        <Drawer placement='left'  onClose={onClose} isOpen={isOpen} >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader  backgroundColor="blue.500" color="white">Menu</DrawerHeader>
+          <DrawerBody backgroundColor="blue.300">
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Inicio</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Reservas</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Gastos</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Mensajes</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Multas</Button>
 
+          </DrawerBody>
+          <DrawerFooter backgroundColor="blue.300">
+            <Button mr = {3} onClick={onClose} colorScheme="blue">
+              Cerrar
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
         <Text fontSize={50} color="white" mt={30} mb={30}>Multas</Text>
-        <HStack>
+        <TableContainer rounded="16" width={"90%"}>
 
-            <Box  minW={{ base: "10%", md: "468px"}} >
-            <form>
-                <Stack spacing={4}
-                    p="1rem"
-                    backgroundColor="whiteAlpha.900"
-                    boxShadow="md"
-                    rounded="16"
-                    flexDir="column"
-            mb="2"
-            justifyContent="center"
-            alignItems="center">
-                    <Table variant={"simple"}>
+        
+                    <Table variant={"simple"} colorScheme="blue" backgroundColor="whiteAlpha.900">
                         <Thead>
                         <Tr>
-                            <Td color={"blue.400"}>Dia</Td>
-                            <Td color={"blue.400"}>Mes</Td>
-                            <Td color={"blue.400"}>Año</Td>
-                            <Td color={"blue.400"}>Tipo</Td>
-                            <Td color={"blue.400"}>Valor</Td>
-                            <Td color={"blue.400"}>N° Multa</Td>
+                            <Td bgColor={"blue.500"} color={"white"}>Fecha</Td>
+                            <Td bgColor={"blue.500"} color={"white"}>Tipo</Td>
+                            <Td bgColor={"blue.500"} color={"white"}>Valor</Td>
+                            <Td bgColor={"blue.500"} color={"white"}>N° Multa</Td>
 
                         </Tr>
                         </Thead>
@@ -125,10 +140,7 @@ const MultasVecino = () => {
                         {showMultas()}
                     </Tbody>
                     </Table>
-                </Stack>
-            </form>
-        </Box>
-        </HStack>
+                    </TableContainer>
         </Flex>
     );
 };
