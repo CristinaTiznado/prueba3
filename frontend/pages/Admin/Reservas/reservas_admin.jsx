@@ -194,7 +194,7 @@ return (
 
           </DrawerBody>
           <DrawerFooter backgroundColor="blue.300">
-            <Button mr={3} onClick={onClose} colorScheme="blue">
+            <Button mr = {3} onClick={onClose} colorScheme="blue">
               Cerrar
             </Button>
           </DrawerFooter>
@@ -202,6 +202,15 @@ return (
       </Drawer>
 
       <Text fontSize={50} color="white" mt={30} mb={30} fontFamily="inherit" >Reservas de Servicio</Text>
+      <Button
+            variant = "solid"
+            colorScheme = "blue"
+            width = "30%"
+            rounded = "40"
+            mb={10}
+            onClick = {() => router.push("/Admin/Reservas/agregar_reserva")}
+        >Agregar Reserva
+      </Button>
     <Stack mb={30}>
     <Box  minW={{ base: "10%", md: "468px"}}>
         <form>
@@ -211,11 +220,11 @@ return (
                 boxShadow="md"
                 rounded="16"
                 flexDir="column"
+                mb="2"
+                justifyContent="center"
+                alignItems="center">
 
-        mb="2"
-        justifyContent="center"
-        alignItems="center">
-            <Stack direction={['column', 'row']}>
+                <Stack direction={['column', 'row']}>
                 <VStack>
                 <Text color={"blue.400"} as="b">Día</Text>
                 <Input placeholder="Ejemplo: 20" onChange={onChange} name="dia" ></Input>

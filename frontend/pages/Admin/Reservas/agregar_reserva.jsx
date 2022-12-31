@@ -1,23 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
-import { Flex, Text, Box, Stack,Button,VStack,HStack, Input, Select,Label, Menu, MenuButton, MenuList,MenuItem } from "@chakra-ui/react";
+import { useDisclosure,DrawerOverlay,DrawerContent,DrawerHeader,DrawerBody,DrawerFooter, Flex, Text, Box, Stack,Button,InputGroup,Drawer, InputLeftElement,HStack, Input, Select,Menu, MenuButton, MenuList,MenuItem } from "@chakra-ui/react";
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import { useRouter } from "next/router";
 
-
-
-
-
 const AgregarReserva=()=> {
-
-
     const [selectedOption, setSelectedOption] = useState('')
     const [valor, setValor] = useState('0')
     const [valor2, setValor2] = useState('0')
-    const [open, setOpen] = useState(false)
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const refOne = useRef(null)
     const router = useRouter();
-
 
     const [values, setValues]= useState({
         dia:'',
@@ -31,7 +24,6 @@ const AgregarReserva=()=> {
     })
 
     useEffect(() => {
-
         getVecinos()
         getServicios()
         document.addEventListener("keydown", hideOnEscape, true)
@@ -50,12 +42,7 @@ const AgregarReserva=()=> {
         }
     }
 
-    //posiblemente hay que eliminar
-
-
-
     const onChange = async (e) => {
-        
         if(e.target.name=="servicio"){
 
             const response1 = await axios.get(`${process.env.API_URL}/servicio/search/${e.target.value}`)
@@ -128,9 +115,7 @@ const AgregarReserva=()=> {
         return fechaMinima;
     }
 
-
-    function castMax()
-    {
+    function castMax(){
         const currentDate = new Date();
         const dateString1 = currentDate.toLocaleDateString('es-ES', { day: '2-digit' });
         const dateString2 = currentDate.toLocaleDateString('es-ES', { month: '2-digit' });
@@ -151,10 +136,7 @@ const AgregarReserva=()=> {
         }
     }
 
-
-
     const Actualizar = () =>{
-
         if(values.servicio.nombre=='lavadora'){
             setValues({...values,
                 costo_base: "8000"});
@@ -172,11 +154,8 @@ const AgregarReserva=()=> {
         Actualizar();
         console.log(values)
 
-
-
         try {
         const response = await axios.post(`${process.env.API_URL}/reserva/${vecino_select.value}`,values)
-        
 
         if(response.status===201){
             Swal.fire({
@@ -215,16 +194,13 @@ const AgregarReserva=()=> {
             if(vecinos.estado=='activo')
             return (
             <option name="vecino" key={vecinos._id} value={vecinos.codigo}>{vecinos.nombre} {vecinos.apellido}</option>
-
         )
     })
     }
 
     const showServicios= () =>{
-
         return servicios.map(servicios =>{
         return (
-
             <option name="servicio" key={servicios.nombre} value={servicios._id}>{servicios.nombre}</option>
         )
         })
@@ -241,111 +217,121 @@ const AgregarReserva=()=> {
     }
 
 
-return (
-    <Flex
-            flexDirection="column"
-            width="100wh"
-            height="100vh"
-            backgroundColor="blue.300"
-            alignItems="center"
-            >
-                <Box backgroundColor="blue.500" w={"100%"} h="10">
-    <Menu>
-  <MenuButton  color="white" w="10%" h="10" background={"blue.600"}>
-    Menú
-  </MenuButton>
-  <MenuList >
-    <MenuItem color="blue.400" as="b"  onClick={() => router.push("/Admin/inicio_admin")} >Inicio</MenuItem>
-    <MenuItem color="blue.400" as="b"  onClick={() => router.push("/Admin/Reservas/reservas_admin")} >Reservas</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Gastos/gastos_admin")}>Gastos</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Mensajes/mensajes_admin")}>Mensajes</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Multas/multas_admin")}>Multas</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Mantenciones/mantenciones_admin")}>Manteciones</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Vecino/vecinos_admin")}>Vecinos</MenuItem>
-  </MenuList>
-</Menu>
-    </Box>
-    <Button mt={10} name="atras" colorScheme="blue" as="b" rounded="40" style={{
-    position: "fixed",
-    top: "20px",
-    left: "200px",
-    zIndex: 1,
-    }}
-    onClick={()=>router.push("/Admin/Reservas/reservas_admin")}>
-    Volver atrás</Button>
-              <Text fontSize={50} color="white" mt={30} mb={30}>Crear Reserva</Text>
-              <Box  minW={{ base: "10%", md: "468px"}} >
-            <form>
-                <Stack spacing={4}
-                    p="1rem"
-                    backgroundColor="whiteAlpha.900"
-                    boxShadow="md"
-                    rounded="16"
-                    flexDir="column"
-            mb="2"
-            justifyContent="left"
-            alignItems="left">
-                <HStack>
-                    <VStack spacing={6}>
-                            <HStack>
+    return (
+        <Flex
+                flexDirection="column"
+                width="150wh"
+        height="auto"
+        minH={"100vh"}
+                backgroundColor="blue.300"
+                alignItems="center"
+                >
+                    <Box backgroundColor="blue.500" w={"100%"} h="16">
+        <Button colorScheme='blue' onClick={onOpen} h="16">
+        Menu
+       </Button>
+       <Button colorScheme='blue' marginLeft="80%" onClick={()=>router.push("/")} h="16">
+        Cerrar Sesión
+       </Button>
+       </Box>
 
-                            </HStack>
-                            <HStack>
-                                    <Text color={"blue.400"} as="b" >Fecha:</Text>
-                                    <Input type="date" id="start"
-                                        date={new Date()}
-                                        onChange={DateSetter}
-                                        min={castMin()} max={castMax()}></Input>
-                            </HStack>
+        <Button mt={10} name="atras" colorScheme="blue" as="b" rounded="40" marginLeft="-60%"
+        onClick={()=>router.push("/Admin/Reservas/reservas_admin")}>
+        Volver atrás</Button>
 
-                            <HStack>
-                                    <Text color={"blue.400"} as="b" >Hora:</Text>
-                                    <Input width={60} 
-                                    type="time"
-                                    pattern="[0-9]{2}:[0-9]{2}" name={"hora"} onChange={onChange} step={3600}></Input>
-                            </HStack>
-                            <HStack>
-                                    <Text  value={selectedOption} color={"blue.400"} name="servicio" as="b" >Servicio:</Text>
-                                    <Select placeholder='seleccione servicio' name="servicio" onChange={onChange}>
-                                        {showServicios()}
-                                    </Select>
-                            </HStack>
-                            <HStack>
-                                    <Text color={"blue.400"} as="b" >Vecino</Text>
-                                    <Select id="vecino_select" placeholder='Vecinos' name="vecino" onChange={onChange}>
-                                    {showVecinos()}
-                                    </Select>
-                            </HStack>
-                            <HStack>
-                                    <Text color={"blue.400"} as="b" >Costo del Servicio</Text>(
-                                    <Text name='costo_base'>{"$"+valor}</Text>)
+        <Drawer placement='left'  onClose={onClose} isOpen={isOpen} >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader  backgroundColor="blue.500" color="white">Menu</DrawerHeader>
+          <DrawerBody backgroundColor="blue.300">
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Inicio</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Reservas</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Gastos</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Mensajes</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Multas</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Manteciones</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Vecinos</Button>
 
-                            </HStack>
-                            <HStack>
-                                    <Text color={"blue.400"} as="b" >Costo Extra </Text>
-                                    <Input width={60} placeholder={'0'} type={"number"} maxLength={5} name={"costo_extra"} onChange={onChange} ></Input>
-                            </HStack>
-                            <HStack>
-                                    <Text color={"blue.400"} as="b" >Costo total </Text>
-                                    <Text name='costoTotal'> {"$"+Tot()} </Text>
-                            </HStack>
-                    </VStack>
 
-                    </HStack>
-                                <Button mb="2"
-                                    variant="solid"
-                                    colorScheme="blue"
-                                    rounded="50"
-                                    onClick={onSubmit}
-                                    >
-                                        CREAR
-                                </Button>
-                </Stack>
-            </form>
-        </Box>
-
-            </Flex>
-)
+          </DrawerBody>
+          <DrawerFooter backgroundColor="blue.300">
+            <Button mr = {3} onClick={onClose} colorScheme="blue">
+              Cerrar
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+                  <Text fontSize={50} color="white" mt={30} mb={30}>Crear Reserva</Text>
+                  <Box  minW={{ base: "10%", md: "468px"}} >
+                    <Stack
+                        spacing={4}
+                        p="1rem"
+                        backgroundColor="whiteAlpha.900"
+                        boxShadow="md"
+                        rounded="16"
+                        flexDir="column"
+                        mb="2"
+                        justifyContent="left"
+                        alignItems="left">
+                                <HStack mt={6}>
+                                        <Text color={"blue.400"} as="b">Fecha:</Text>
+                                        <Input type="date" id="start"
+                                            date={new Date()}
+                                            onChange={DateSetter}
+                                            min={castMin()} max={castMax()}></Input>
+                                </HStack>
+    
+                                <HStack>
+                                        <Text color={"blue.400"} as="b" >Hora:</Text>
+                                        <Input width={"full"}
+                                        type="time"
+                                        pattern="[0-9]{2}:[0-9]{2}" name={"hora"} onChange={onChange} step={3600}></Input>
+                                </HStack>
+                                <HStack>
+                                        <Text  value={selectedOption} color={"blue.400"} name="servicio" as="b" >Servicio:</Text>
+                                        <Select placeholder='Seleccione servicio' name="servicio" onChange={onChange}>
+                                            {showServicios()}
+                                        </Select>
+                                </HStack>
+                                <HStack>
+                                        <Text color={"blue.400"} as="b" >Vecino: </Text>
+                                        <Select id="vecino_select" placeholder='Vecinos' name="vecino" onChange={onChange}>
+                                        {showVecinos()}
+                                        </Select>
+                                </HStack>
+                                <HStack>
+                                        <Text color={"blue.400"} as="b" >Costo del Servicio: </Text>(
+                                        <Text name='costo_base'>{"$"+valor}</Text>)
+    
+                                </HStack>
+                                <HStack >
+                                        <Text width={120} color={"blue.400"} as="b" >Costo Extra: </Text>
+                                        <InputGroup>
+                                        <InputLeftElement
+                                            pointerEvents='none'
+                                            fontSize='1.2em'
+                                            children='$'
+                                        />
+                                        <Input width={"full"} placeholder={'0'} type={"number"} maxLength={5} name={"costo_extra"} onChange={onChange} ></Input>
+                                        </InputGroup>
+                                </HStack>
+                                <HStack>
+                                        <Text color={"blue.400"} as="b" >Costo total: </Text>
+                                        <Text name='costoTotal'> {"$"+Tot()} </Text>
+                                </HStack>
+                                    <Button mb={2}
+                                        variant="solid"
+                                        colorScheme="blue"
+                                        rounded="50"
+                                        onClick={onSubmit}
+                                        >
+                                            CREAR
+                                    </Button>
+                    </Stack>
+            </Box>
+    
+                </Flex>
+    )
 }
 
 export default AgregarReserva

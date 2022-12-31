@@ -258,36 +258,34 @@ return (
             onClick={()=>router.push("/Admin/Mantenciones/mantenciones_admin")}>
             Volver atrás</Button>
               <Text fontSize={50} color="white" mt={30} mb={30}>Crear Mantencion</Text>
-              <Box  minW={{ base: "10%", md: "468px"}} >
-            <form>
+              <Box  minW={{ base: "20%", md: "250px"}} >
+           
                 <Stack spacing={4}
-                    p="1rem"
-                    backgroundColor="whiteAlpha.900"
-                    boxShadow="md"
-                    rounded="16"
-                    flexDir="column"
-            mb="2"
-            justifyContent="left"
-            alignItems="left">
-                <HStack>
-                    <VStack spacing={6}>
+                        p="1rem"
+                        backgroundColor="whiteAlpha.900"
+                        boxShadow="md"
+                        rounded="16"
+                        mb="2"
+                        width={"full"}>
                             <HStack>
-                                    <Text color={"blue.400"} as="b" >Nombre de empresa</Text>
-                                    <Input width={60} type={"text"} name={"nombre_empresa"}onChange={onChange} ></Input>
+                                    <Text position={"left"}  color={"blue.400"} as="b" >Nombre Empresa:</Text>
+                                    <Input width={"full"} type={"text"} name={"nombre_empresa"}onChange={onChange} ></Input>
                             </HStack>
                             <HStack>
-                                    <Text color={"blue.400"} as="b" >rut de empresa</Text>
-                                    <Input width={60} type={"text"} name={"rut_empresa"}onChange={onChange} ></Input>
+                                    <Text  color={"blue.400"} as="b" >Rut Empresa:</Text>
+                                    <Input width={"full"} type={"text"} name={"rut_empresa"}onChange={onChange} ></Input>
                             </HStack>
                             <HStack>
-                                    <Text color={"blue.400"} as="b" >giro de empresa</Text>
-                                    <Input width={60} type={"text"} name={"giro"}onChange={onChange} ></Input>
+                                    <Text  color={"blue.400"} as="b" >Giro Empresa:</Text>
+                                    <Input width={"full"} type={"text"} name={"giro"}onChange={onChange} ></Input>
                             </HStack>
                             <HStack>
-                                    <Text color={"blue.400"} as="b" >descripcion de mantencion</Text>
+                              <Text color={"blue.400"} as="b" >Descripcion Mantención:</Text>
+                              
+                                    
                                     <Textarea
-                                        placeholder='Escribe la descripci처n de la mantencion'
-                                        width={60}
+                                        placeholder='Escribe la descripción de la mantencion'
+                                        width={"full"}
                                         type={"text"}
                                         name={"descripcion"}
                                         minLength={10}
@@ -296,19 +294,19 @@ return (
                                     </Textarea>
                             </HStack>
                             <HStack>
-                                    <Text color={"blue.400"} as="b" >valor </Text>
-                                    <Input width={60} type={"number"} name={"valor"}onChange={onChange} ></Input>
+                                    <Text  color={"blue.400"} as="b" >Valor:</Text>
+                                    <Input width={"full"} type={"number"} name={"valor"}onChange={onChange} ></Input>
                             </HStack>
                             <HStack>
-                                    <Text color={"blue.400"} as="b" >Fecha</Text>
-                                    <Input type="date" id="start"
+                                    <Text  color={"blue.400"} as="b" >Fecha:</Text>
+                                    <Input width={"full"} type="date" id="start"
                                         date={new Date()}
                                         onChange={DateSetter}
                                         min={castMin()} max={castMax()}></Input>
                             </HStack>
                             <HStack style={{display:semana}}>
-                                    <Text color={"blue.400"}  as="b" >Hora:</Text>
-                                    <Select placeholder='Hora'  name="hora"   onChange={onChange}>
+                                    <Text  color={"blue.400"}  as="b" >Hora:</Text>
+                                    <Select width={"full"} placeholder='Hora'  name="hora"   onChange={onChange}>
                                         <option name="7:00" value={"7:00"} >    7:00</option>
                                         <option name="8:00" value={"8:00"} >    8:00</option>
                                         <option name="9:00" value={"9:00"} >    9:00</option>
@@ -326,8 +324,8 @@ return (
                             </HStack >
 
                             <HStack style={{display:findesemana}}>
-                                    <Text color={"blue.400"} as="b"  >Hora:</Text>
-                                    <Select placeholder='Hora'  name="hora"   onChange={onChange}>
+                                    <Text  color={"blue.400"} as="b"  >Hora:</Text>
+                                    <Select width={"full"} placeholder='Hora'  name="hora"   onChange={onChange}>
                                         <option name="8:00"  value={"8:00"} >   8:00</option>
                                         <option name="9:00"  value={"9:00"} >   9:00</option>
                                         <option name="10:00" value={"10:00"} > 10:00</option>
@@ -347,18 +345,15 @@ return (
                             </HStack>
 
                             <HStack>
-                                    <Text color={"blue.400"} as="b" >Observaciones </Text>
+                                    <Text  color={"blue.400"} as="b" >Observaciones:</Text>
                                     <Textarea
                                             placeholder='Escribe las observaciones de la mantencion'
-                                            width={60} type={"text"}
+                                            width={"full"} type={"text"}
                                             minLength={10}
                                             maxLength={200}
                                             name={"observaciones"}onChange={onChange} >
                                     </Textarea>
                             </HStack>
-                    </VStack>
-
-                    </HStack>
                                 <Button mb="2"
                                     variant="solid"
                                     colorScheme="blue"
@@ -368,7 +363,6 @@ return (
                                         CREAR
                                 </Button>
                 </Stack>
-            </form>
         </Box>
 
             </Flex>

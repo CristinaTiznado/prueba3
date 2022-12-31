@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Flex, Text, Box, Stack,Button,VStack,HStack,Accordion, Input,Checkbox,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon, Textarea, Menu, MenuButton, MenuList,MenuItem } from "@chakra-ui/react";
+import { useDisclosure,DrawerOverlay,DrawerContent,DrawerHeader,DrawerBody,DrawerFooter,Drawer,Flex, Text, Box, Stack,Button,VStack,HStack,Accordion, Input,Checkbox,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon, Textarea, Menu, MenuButton, MenuList,MenuItem } from "@chakra-ui/react";
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import { useRouter } from "next/router";
 
 
 const AgregarMensaje = () => {
-
+    const { isOpen, onOpen, onClose } = useDisclosure()
 const today = new Date();
 const day = today.getDate();
 const month= today.getMonth()+1;
@@ -142,53 +142,62 @@ return (
             backgroundColor="blue.400"
             alignItems="center"
             >
-            <Box backgroundColor="blue.500" w={"100%"} h="10">
-                <Menu>
-                <MenuButton  color="white" w="10%" h="10" background={"blue.600"}>
-                    Menú
-                </MenuButton>
-                <MenuList >
-                    <MenuItem color="blue.400" as="b"  onClick={() => router.push("/Admin/inicio_admin")} >Inicio</MenuItem>
-                    <MenuItem color="blue.400" as="b"  onClick={() => router.push("/Admin/Reservas/reservas_admin")} >Reservas</MenuItem>
-                    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Gastos/gastos_admin")}>Gastos</MenuItem>
-                    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Mensajes/mensajes_admin")}>Mensajes</MenuItem>
-                    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Multas/multas_admin")}>Multas</MenuItem>
-                    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Mantenciones/mantenciones_admin")}>Manteciones</MenuItem>
-                    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Vecino/vecinos_admin")}>Vecinos</MenuItem>
-                </MenuList>
-                </Menu>
-            </Box>
-            <Button mt={10} name="atras" colorScheme="blue" as="b" rounded="40" style={{
-            position: "fixed",
-            top: "20px",
-            left: "200px",
-            zIndex: 1,
-            }}
-            onClick={()=>router.push("/Admin/Mensajes/mensajes_admin")}>
-            Volver atrás</Button>
+            <Box backgroundColor="blue.500" w={"100%"} h="16">
+        <Button colorScheme='blue' onClick={onOpen} h="16">
+        Menu
+       </Button>
+       <Button colorScheme='blue' marginLeft="80%" onClick={()=>router.push("/")} h="16">
+        Cerrar Sesión
+       </Button>
+       </Box>
 
-              <Text fontSize={50} color="white" mt={30} mb={30}>Crear Mensaje</Text>
+        <Button mt={10} name="atras" colorScheme="blue" as="b" rounded="40" marginLeft="-60%"
+        onClick={()=>router.push("/Admin/Mensajes/mensajes_admin")}>
+        Volver atrás</Button>
+
+        <Drawer placement='left'  onClose={onClose} isOpen={isOpen} >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader  backgroundColor="blue.500" color="white">Menu</DrawerHeader>
+          <DrawerBody backgroundColor="blue.300">
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Inicio</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Reservas</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Gastos</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Mensajes</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Multas</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Manteciones</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Vecinos</Button>
+
+
+          </DrawerBody>
+          <DrawerFooter backgroundColor="blue.300">
+            <Button mr = {3} onClick={onClose} colorScheme="blue">
+              Cerrar
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+
+      <Text fontSize={50} color="white" mt={30} mb={30}>Crear Mensaje</Text>
               <Box  minW={{ base: "10%", md: "468px"}} >
-            <form>
-                <Stack spacing={4}
-                    p="1rem"
-                    backgroundColor="whiteAlpha.900"
-                    boxShadow="md"
-                    rounded="16"
-                    flexDir="column"
-            mb="2"
-            justifyContent="left"
-            alignItems="left">
-                <HStack>
-                    <VStack spacing={6}>
-
+            
+                <Stack
+                spacing={4}
+                p="1rem"
+                backgroundColor="whiteAlpha.900"
+                boxShadow="md"
+                rounded="16"
+                flexDir="column"
+                mb="2"
+                justifyContent="left"
+                alignItems="left">
                             <HStack>
                                     <Text color={"blue.400"} as="b" >De:</Text>
                                     <Text>{administrador.nombre} {administrador.apellido}</Text>
                             </HStack>
                             <HStack>
                                     <Text color={"blue.400"} as="b" >Vecino(s):</Text>
-                                    <Accordion allowToggle width={200}>
+                                    <Accordion allowToggle width={"full"}>
                                     <AccordionItem>
                                         <h2>
                                         <AccordionButton>
@@ -198,7 +207,7 @@ return (
                                         <AccordionIcon />
                                         </AccordionButton>
                                         </h2>
-                                    <AccordionPanel pb={4}>
+                                    <AccordionPanel pb={4} alignItems={"center"}>
                                     {showVecinos()}
                                     <Checkbox> Todos </Checkbox>
                                     </AccordionPanel>
@@ -212,15 +221,13 @@ return (
                             <HStack>
                                     <Text color={"blue.400"} as="b" >Asunto:</Text>(
                                     <Text name='costo_base'></Text>)
-                                    <Input width={60} type={"text"} name={"asunto"}onChange={onChange} minLength="10" ></Input>
+                                    <Input width={"full"} type={"text"} name={"asunto"}onChange={onChange} minLength="10" ></Input>
                             </HStack>
                             <HStack>
                                     <Text color={"blue.400"} as="b" >Cuerpo:</Text>
-                                    <Textarea width={60} name={"contenido"}onChange={onChange} resize='none' height={200} ></Textarea>
+                                    <Textarea width={"full"} name={"contenido"}onChange={onChange} resize='none' height={200} ></Textarea>
                             </HStack>
-                    </VStack>
-
-                    </HStack>
+                    
                                 <Button mb="2"
                                     variant="solid"
                                     colorScheme="blue"
@@ -230,7 +237,6 @@ return (
                                         ENVIAR
                                 </Button>
                 </Stack>
-            </form>
         </Box>
             </Flex>
 )

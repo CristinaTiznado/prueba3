@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Text, Box, Stack, Button, HStack, Card, CardHeader, CardBody, CardFooter, Input, Menu, MenuButton, MenuList,MenuItem } from "@chakra-ui/react";
+import { useDisclosure,DrawerOverlay,DrawerContent,DrawerHeader,DrawerBody,DrawerFooter,Drawer,Text, Box, Stack, Button, HStack, Card, CardHeader, CardBody, CardFooter, Input, Menu, MenuButton, MenuList,MenuItem } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { EditIcon } from '@chakra-ui/icons'
 import axios from "axios";
@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 
 
 const Inicio_admin = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const router = useRouter();
     const {
         query: { codigo },
@@ -103,22 +104,37 @@ const Carga = (e) =>{
             minH={"100vh"}
             backgroundColor = "blue.300"
             alignItems = "center"
-        >
-            <Box backgroundColor="blue.500" w={"100%"} h="10">
-    <Menu>
-  <MenuButton  color="white" w="10%" h="10" background={"blue.600"}>
-    Menú
-  </MenuButton>
-  <MenuList >
-    <MenuItem color="blue.400" as="b"  onClick={() => router.push("/Admin/Reservas/reservas_admin")} >Reservas</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Gastos/gastos_admin")}>Gastos</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Mensajes/mensajes_admin")}>Mensajes</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Multas/multas_admin")}>Multas</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Mantenciones/mantenciones_admin")}>Manteciones</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Vecino/vecinos_admin")}>Vecinos</MenuItem>
-  </MenuList>
-</Menu>
-    </Box>
+        ><Box backgroundColor="blue.500" w={"100%"} h="16">
+        <Button colorScheme='blue' onClick={onOpen} h="16">
+        Menu
+       </Button>
+       <Button colorScheme='blue' marginLeft="80%" onClick={()=>router.push("/")} h="16">
+        Cerrar Sesión
+       </Button>
+       </Box>
+
+        <Drawer placement='left'  onClose={onClose} isOpen={isOpen} >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader  backgroundColor="blue.500" color="white">Menu</DrawerHeader>
+          <DrawerBody backgroundColor="blue.300">
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Inicio</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Reservas</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Gastos</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Mensajes</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Multas</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Manteciones</Button>
+            <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Vecinos</Button>
+
+
+          </DrawerBody>
+          <DrawerFooter backgroundColor="blue.300">
+            <Button mr = {3} onClick={onClose} colorScheme="blue">
+              Cerrar
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
 
             <HStack>
                 <Text fontSize = {50} color = "white" as={"b"} mt = {30} mb = {30}>

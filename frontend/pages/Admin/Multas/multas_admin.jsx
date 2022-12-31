@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { Flex, Text, Box, Stack, Table, Thead,Tr,Td,Tbody, Button,HStack,Menu, MenuButton, MenuList,MenuItem, TableContainer} from "@chakra-ui/react";
+import { useDisclosure,DrawerOverlay,DrawerContent,DrawerHeader,DrawerBody,DrawerFooter,Drawer,Flex, Text, Box, Stack, Table, Thead,Tr,Td,Tbody, Button,HStack,Menu, MenuButton, MenuList,MenuItem, TableContainer} from "@chakra-ui/react";
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2'
 
 
 const MultasAdmin = () => {
-
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const router = useRouter()
 
 const [multas, setMultas] = useState([])
@@ -71,31 +71,41 @@ const [multas, setMultas] = useState([])
             height="100vh"
             backgroundColor="blue.300"
             alignItems="center"
-            >
-
-<Box backgroundColor="blue.500" w={"100%"} h="10">
-    <Menu>
-  <MenuButton  color="white" w="10%" h="10" background={"blue.600"}>
-    Menú
-  </MenuButton>
-  <MenuList >
-    <MenuItem color="blue.400" as="b"  onClick={() => router.push("/Admin/inicio_admin")} >Inicio</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Reservas/reservas_admin")}>Reservas</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Gastos/gastos_admin")}>Gastos</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Mensajes/mensajes_admin")}>Mensajes</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Mantenciones/mantenciones_admin")}>Manteciones</MenuItem>
-    <MenuItem color="blue.400" as="b" onClick={() => router.push("/Admin/Vecino/vecinos_admin")}>Vecinos</MenuItem>
-  </MenuList>
-</Menu>
-    </Box>
-            <Button mt={10} name="atras" colorScheme="blue" as="b" rounded="40" style={{
-            position: "fixed",
-            top: "20px",
-            left: "200px",
-            zIndex: 1,
-            }}
+            ><Box backgroundColor="blue.500" w={"100%"} h="16">
+            <Button colorScheme='blue' onClick={onOpen} h="16">
+            Menu
+           </Button>
+           <Button colorScheme='blue' marginLeft="80%" onClick={()=>router.push("/")} h="16">
+            Cerrar Sesión
+           </Button>
+           </Box>
+    
+            <Button mt={10} name="atras" colorScheme="blue" as="b" rounded="40" marginLeft="-60%"
             onClick={()=>router.push("/Admin/inicio_admin")}>
             Volver atrás</Button>
+    
+            <Drawer placement='left'  onClose={onClose} isOpen={isOpen} >
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerHeader  backgroundColor="blue.500" color="white">Menu</DrawerHeader>
+              <DrawerBody backgroundColor="blue.300">
+                <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Inicio</Button>
+                <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Reservas</Button>
+                <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Gastos</Button>
+                <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Mensajes</Button>
+                <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Multas</Button>
+                <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Manteciones</Button>
+                <Button width={"100%"} colorScheme="blue" mb="2" height="20" fontSize="20">Vecinos</Button>
+    
+    
+              </DrawerBody>
+              <DrawerFooter backgroundColor="blue.300">
+                <Button mr = {3} onClick={onClose} colorScheme="blue">
+                  Cerrar
+                </Button>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
 
         <Text fontSize={50} color="white" as={"b"} mt={30} mb={30}>Multas</Text>
         <Button

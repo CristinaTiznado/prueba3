@@ -100,39 +100,45 @@ const onSubmit= async(e) =>{
             Volver atrás</Button>
               <Text fontSize={50} color="white" mt={30} mb={30}>Agregar Vecino</Text>
               <Box  minW={{ base: "10%", md: "468px"}} >
-            <form>
+           
                 <Stack spacing={4}
-                    p="1rem"
-                    backgroundColor="whiteAlpha.900"
-                    boxShadow="md"
-                    rounded="16"
-                    flexDir="column"
-            mb="2"
-            justifyContent="center"
-            alignItems="center">
-                  <HStack>
-                    <VStack spacing={6}>
-                      <Text color={"blue.400"} as="b">Nombre</Text>
-                      <Text color={"blue.400"} as="b">Apellido</Text>
-                      <Text color={"blue.400"} as="b"  >Rut</Text>
-                      <Text color={"blue.400"} as="b" >Vivienda</Text>
-                      <Text color={"blue.400"} as="b"  >Horas</Text>
-                      <Text color={"blue.400"} as="b" >Permiso</Text>
-                      <Text color={"blue.400"} as="b" >Codigo</Text>
-                    </VStack>
-                    <VStack>
-                    <Input width={60} type={"text"} maxLength={20} name={"nombre"} onChange={onChange} ></Input>
-                    <Input width={60}  type={"text"} maxLength={20} name={"apellido"} onChange={onChange}></Input>
-                    <Input width={60} type={"text"} maxLength={12} name={"rut"} onChange={onChange}></Input>
-                    <Input width={60} type={"number"} maxLength={2} name={"vivienda"} onChange={onChange}></Input>
-                    <Input width={60} type={"number"} maxLength={2} name={"horas"} onChange={onChange}></Input>
-                    <Select placeholder='Permiso'  name="permiso" onChange={onChange}>
+                        p="1rem"
+                        backgroundColor="whiteAlpha.900"
+                        boxShadow="md"
+                        rounded="16"
+                        mb="2"
+                        width={"full"}>
+                          <HStack>
+                          <Text color={"blue.400"} as="b">Nombre:</Text>
+                          <Input width={"full"} type={"text"} maxLength={20} name={"nombre"} onChange={onChange} ></Input>
+                          </HStack>
+                      <HStack>
+                      <Text color={"blue.400"} as="b">Apellido:</Text>
+                      <Input width={"full"}  type={"text"} maxLength={20} name={"apellido"} onChange={onChange}></Input>
+                      </HStack>
+                      <HStack>
+                      <Text color={"blue.400"} as="b"  >Rut:</Text>
+                      <Input width={"full"} type={"text"} maxLength={12} name={"rut"} onChange={onChange}></Input>
+                      </HStack>
+                      <HStack>
+                      <Text color={"blue.400"} as="b" >Vivienda:</Text>
+                      <Input width={"full"} type={"number"} maxLength={2} name={"vivienda"} onChange={onChange}></Input>
+                      </HStack>
+                      <HStack>
+                      <Text color={"blue.400"} as="b"  >Horas:</Text>
+                      <Input width={"full"} type={"number"} maxLength={2} name={"horas"} onChange={onChange}></Input>
+                      </HStack>
+                      <HStack>
+                      <Text color={"blue.400"} as="b" >Permiso:</Text>
+                      <Select width={"full"} placeholder='Permiso'  name="permiso" onChange={onChange}>
                         <option color={"blue.400"} as="b" >habilitado</option>
                         <option color={"blue.400"} as="b" >inhabilitado</option>
                       </Select>
-                    <Input width={60} type={"number"} maxLength={4} name={"codigo"} onChange={onChange}></Input>
-                    </VStack>
-                    </HStack>
+                      </HStack>
+                      <HStack>
+                      <Text color={"blue.400"} as="b" >Codigo:</Text>
+                      <Input width={"full"} type={"number"} maxLength={4} name={"codigo"} onChange={onChange}></Input>
+                      </HStack>
                           <Button mb="2"
                             variant="solid"
                             colorScheme="blue"
@@ -141,7 +147,6 @@ const onSubmit= async(e) =>{
                             >
                           Agregar</Button>
                 </Stack>
-            </form>
         </Box>
 
             </Flex>
